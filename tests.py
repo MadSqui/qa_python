@@ -9,6 +9,7 @@ class TestBooksCollector:
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
         assert len(collector.get_books_rating()) == 2
+
 class TestBooksCollector:
 
     def test_add_new_book_add_two_books(self):
@@ -64,24 +65,19 @@ class TestBooksCollector:
     def test_add_book_in_favorites(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение')
-        collector.set_book_genre('Гордость и предубеждение', 'Роман')
-
         collector.add_book_in_favorites('Гордость и предубеждение')
         assert 'Гордость и предубеждение' in collector.get_list_of_favorites_books()
 
     def test_add_book_in_favorites_already_added(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение')
-        collector.set_book_genre('Гордость и предубеждение', 'Роман')
-
         collector.add_book_in_favorites('Гордость и предубеждение')
-        collector.add_book_in_favorites('Гордость и предубеждение')  # Попытка добавить снова
+        collector.add_book_in_favorites('Гордость и предубеждение')
         assert len(collector.get_list_of_favorites_books()) == 1
 
     def test_delete_book_from_favorites(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение')
-        collector.set_book_genre('Гордость и предубеждение', 'Роман')
         collector.add_book_in_favorites('Гордость и предубеждение')
         collector.delete_book_from_favorites('Гордость и предубеждение')
         assert 'Гордость и предубеждение' not in collector.get_list_of_favorites_books()
@@ -97,3 +93,10 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book(book_name)
         assert book_name in collector.get_books_genre()
+
+    def test_get_list_of_favorites_books(self):
+        collector = BooksCollector()
+        collector.add_new_book('Гордость и предубеждение')
+        collector.add_book_in_favorites('Гордость и предубеждение')
+        favorites = collector.get_list_of_favorites_books()
+        assert favorites == ['Гордость и предубеждение']
